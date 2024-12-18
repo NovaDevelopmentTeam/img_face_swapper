@@ -1,59 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Face Swap</title>
-    <style>
-        .preview-container {
-            display: flex;
-            gap: 20px;
-        }
-        .preview {
-            max-width: 300px;
-            max-height: 300px;
-        }
-    </style>
+    <title>Face Swap</title>
 </head>
 <body>
-    <h1>Video Face Swap</h1>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="image">Select Image:</label>
-        <input type="file" id="image" name="image" accept="image/*" onchange="previewImage(event)">
-        <div id="image-preview" class="preview-container"></div>
-
-        <label for="video">Select Video:</label>
-        <input type="file" id="video" name="video" accept="video/*" onchange="previewVideo(event)">
-        <div id="video-preview" class="preview-container"></div>
-
-        <button type="submit">Upload</button>
+    <h1>Face Swap</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <label for="file1">Wähle das erste Bild (Gesicht 1):</label>
+        <input type="file" name="file1" accept="image/*" required><br><br>
+        <label for="file2">Wähle das zweite Bild (Gesicht 2):</label>
+        <input type="file" name="file2" accept="image/*" required><br><br>
+        <input type="submit" value="Starten">
     </form>
-
-    <script>
-        function previewImage(event) {
-            const imagePreview = document.getElementById('image-preview');
-            imagePreview.innerHTML = ''; // Alte Vorschau löschen
-            const file = event.target.files[0];
-            if (file) {
-                const img = document.createElement('img');
-                img.src = URL.createObjectURL(file);
-                img.classList.add('preview');
-                imagePreview.appendChild(img);
-            }
-        }
-
-        function previewVideo(event) {
-            const videoPreview = document.getElementById('video-preview');
-            videoPreview.innerHTML = ''; // Alte Vorschau löschen
-            const file = event.target.files[0];
-            if (file) {
-                const video = document.createElement('video');
-                video.src = URL.createObjectURL(file);
-                video.classList.add('preview');
-                video.controls = true;
-                videoPreview.appendChild(video);
-            }
-        }
-    </script>
 </body>
 </html>

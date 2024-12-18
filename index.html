@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Swap</title>
+</head>
+<body>
+    <h1>Face Swap</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <label for="file1">Wähle das erste Bild (Gesicht 1):</label>
+        <input type="file" name="file1" accept="image/*" required><br><br>
+        <label for="file2">Wähle das zweite Bild (Gesicht 2):</label>
+        <input type="file" name="file2" accept="image/*" required><br><br>
+        <input type="submit" value="Starten">
+    </form>
+</body>
+</html>

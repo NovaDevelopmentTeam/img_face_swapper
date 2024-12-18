@@ -4,6 +4,7 @@ import numpy as np
 from flask import Flask, render_template, request, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
+import urllib.request
 
 # Flask-App initialisieren
 app = Flask(__name__)
@@ -12,9 +13,22 @@ app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads/'
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
 
-# Lade den Gesichtserkennungsmodell
+# Modell herunterladen, falls es nicht existiert
+MODEL_URL = 'http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2'
+MODEL_PATH = 'shape_predictor_68_face_landmarks.dat'
+
+def download_model():
+    if not os.path.exists(MODEL_PATH):  # Überprüfen, ob das Modell schon existiert
+        print("Modell wird heruntergeladen...")
+        urllib.request.urlretrieve(MODEL_URL, MODEL_PATH)
+        print("Modell erfolgreich heruntergeladen.")
+    else:
+        print("Modell ist bereits vorhanden.")
+
+# Lade das Gesichtserkennungsmodell
+download_model()  # Modell beim Start herunterladen
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
+predictor = dlib.shape_predictor(MODEL_PATH)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -94,4 +108,4 @@ def upload_file():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')  # Server auf 0.0.0.0 hören lassen
